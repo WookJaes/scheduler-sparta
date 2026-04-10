@@ -2,12 +2,17 @@ package com.wookjae.scheduler.controller;
 
 import com.wookjae.scheduler.dto.CreateScheduleRequest;
 import com.wookjae.scheduler.dto.CreateScheduleResponse;
+import com.wookjae.scheduler.dto.GetScheduleResponse;
 import com.wookjae.scheduler.service.ScheduleService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -17,8 +22,20 @@ public class ScheduleController {
     private final ScheduleService scheduleService;
 
     @PostMapping("/schedules")
-    public ResponseEntity<CreateScheduleResponse> createSchedule(@RequestBody CreateScheduleRequest request){
+    public ResponseEntity<CreateScheduleResponse> createSchedule(
+        @RequestBody CreateScheduleRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(scheduleService.save(request));
+    }
+
+    @GetMapping("/schedules")
+    public ResponseEntity<List<GetScheduleResponse>> getSchedules(
+        @RequestParam(required = false) String author) {
+        return ResponseEntity.status(HttpStatus.OK).body(scheduleService.findAll(author));
+    }
+
+    @GetMapping("/schedules/{id}")
+    public ResponseEntity<GetScheduleResponse> getSchedule(@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(scheduleService.findOne(id));
     }
 
 }
