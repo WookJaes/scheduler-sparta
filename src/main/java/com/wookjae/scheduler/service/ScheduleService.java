@@ -1,12 +1,16 @@
 package com.wookjae.scheduler.service;
 
+import com.wookjae.scheduler.dto.CommentResponse;
 import com.wookjae.scheduler.dto.CreateScheduleRequest;
 import com.wookjae.scheduler.dto.CreateScheduleResponse;
 import com.wookjae.scheduler.dto.DeleteScheduleRequest;
+import com.wookjae.scheduler.dto.GetScheduleDetailResponse;
 import com.wookjae.scheduler.dto.GetScheduleResponse;
 import com.wookjae.scheduler.dto.UpdateScheduleRequest;
 import com.wookjae.scheduler.dto.UpdateScheduleResponse;
+import com.wookjae.scheduler.entity.Comment;
 import com.wookjae.scheduler.entity.Schedule;
+import com.wookjae.scheduler.repository.CommentRepository;
 import com.wookjae.scheduler.repository.ScheduleRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +25,7 @@ import org.springframework.web.server.ResponseStatusException;
 public class ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
+    private final CommentRepository commentRepository;
 
     @Transactional
     public CreateScheduleResponse save(CreateScheduleRequest request) {
@@ -77,18 +82,31 @@ public class ScheduleService {
     }
 
     @Transactional(readOnly = true)
-    public GetScheduleResponse findOne(Long scheduleId) {
+    public GetScheduleDetailResponse findOne(Long scheduleId) {
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(
             () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "해당 일정이 없습니다.")
         );
 
-        return new GetScheduleResponse(
+        List<Comment> comments = commentRepository.findByScheduleId(scheduleId);
+
+        List<CommentResponse> commentResponses = new ArrayList<>();
+        for (Comment comment : comments) {
+            commentResponses.add(new CommentResponse(
+                comment.getCommentId(),
+                comment.getContent(),
+                comment.getAuthor(),
+                comment.getCreatedAt()
+            ));
+        }
+
+        return new GetScheduleDetailResponse(
             schedule.getScheduleId(),
             schedule.getTitle(),
             schedule.getContent(),
             schedule.getAuthor(),
             schedule.getCreatedAt(),
-            schedule.getModifiedAt()
+            schedule.getModifiedAt(),
+            commentResponses
         );
     }
 

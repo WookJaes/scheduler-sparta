@@ -3,6 +3,7 @@ package com.wookjae.scheduler.controller;
 import com.wookjae.scheduler.dto.CreateScheduleRequest;
 import com.wookjae.scheduler.dto.CreateScheduleResponse;
 import com.wookjae.scheduler.dto.DeleteScheduleRequest;
+import com.wookjae.scheduler.dto.GetScheduleDetailResponse;
 import com.wookjae.scheduler.dto.GetScheduleResponse;
 import com.wookjae.scheduler.dto.UpdateScheduleRequest;
 import com.wookjae.scheduler.dto.UpdateScheduleResponse;
@@ -39,7 +40,7 @@ public class ScheduleController {
     }
 
     @GetMapping("/schedules/{scheduleId}")
-    public ResponseEntity<GetScheduleResponse> getSchedule(@PathVariable Long scheduleId) {
+    public ResponseEntity<GetScheduleDetailResponse> getSchedule(@PathVariable Long scheduleId) {
         return ResponseEntity.status(HttpStatus.OK).body(scheduleService.findOne(scheduleId));
     }
 
