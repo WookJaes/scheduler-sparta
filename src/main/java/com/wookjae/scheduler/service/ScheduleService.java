@@ -28,7 +28,7 @@ public class ScheduleService {
 
         Schedule savedSchedule = scheduleRepository.save(schedule);
         return new CreateScheduleResponse(
-            savedSchedule.getId(),
+            savedSchedule.getScheduleId(),
             savedSchedule.getTitle(),
             savedSchedule.getContent(),
             savedSchedule.getAuthor(),
@@ -39,18 +39,14 @@ public class ScheduleService {
 
     @Transactional(readOnly = true)
     public List<GetScheduleResponse> findAll(String author) {
-        List<Schedule> schedules;
-
-        if (author == null || author.isBlank()) {
-            schedules = scheduleRepository.findAllByOrderByModifiedAtDesc();
-        } else {
-            schedules = scheduleRepository.findByAuthorOrderByModifiedAtDesc(author);
-        }
+        List<Schedule> schedules = (author == null || author.isBlank())
+            ? scheduleRepository.findAllByOrderByModifiedAtDesc()
+            : scheduleRepository.findByAuthorOrderByModifiedAtDesc(author);
 
         List<GetScheduleResponse> responses = new ArrayList<>();
         for (Schedule schedule : schedules) {
             responses.add(new GetScheduleResponse(
-                schedule.getId(),
+                schedule.getScheduleId(),
                 schedule.getTitle(),
                 schedule.getContent(),
                 schedule.getAuthor(),
@@ -68,7 +64,7 @@ public class ScheduleService {
         );
 
         return new GetScheduleResponse(
-            schedule.getId(),
+            schedule.getScheduleId(),
             schedule.getTitle(),
             schedule.getContent(),
             schedule.getAuthor(),
