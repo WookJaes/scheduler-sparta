@@ -65,7 +65,7 @@ public class ScheduleService {
     @Transactional(readOnly = true)
     public GetScheduleResponse findOne(Long scheduleId) {
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(
-            () -> new IllegalArgumentException("해당 일정을 찾을 수 없습니다!")
+            () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "해당 일정이 없습니다.")
         );
 
         return new GetScheduleResponse(
@@ -99,9 +99,10 @@ public class ScheduleService {
         );
     }
 
+    @Transactional
     public void delete(Long scheduleId, DeleteScheduleRequest request) {
         Schedule schedule = scheduleRepository.findById(scheduleId)
-            .orElseThrow(() -> new IllegalArgumentException("해당 일정이 존재하지 않습니다."));
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "해당 일정이 없습니다."));
 
         if (!schedule.getPassword().equals(request.getPassword())) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "비밀번호가 일치하지 않습니다.");
