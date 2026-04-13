@@ -10,13 +10,11 @@ public class UpdateScheduleResponse {
     private final String title;
     private final String author;
     private final LocalDateTime createdAt;
-    private final LocalDateTime modifiedAt;
 
-    public UpdateScheduleResponse(Long id, String title, String author, LocalDateTime createdAt, LocalDateTime modifiedAt) {
+    public UpdateScheduleResponse(Long id, String title, String author, LocalDateTime createdAt) {
         this.id = id;
         this.title = title;
         this.author = author;
         this.createdAt = createdAt;
-        this.modifiedAt = modifiedAt;
     }
 }

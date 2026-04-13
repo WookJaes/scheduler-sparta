@@ -117,8 +117,7 @@ public class ScheduleService {
             schedule.getScheduleId(),
             schedule.getTitle(),
             schedule.getAuthor(),
-            schedule.getCreatedAt(),
-            schedule.getModifiedAt()
+            schedule.getCreatedAt()
         );
     }
 
