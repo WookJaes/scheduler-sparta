@@ -2,6 +2,7 @@ package com.wookjae.scheduler.service;
 
 import com.wookjae.scheduler.dto.CreateScheduleRequest;
 import com.wookjae.scheduler.dto.CreateScheduleResponse;
+import com.wookjae.scheduler.dto.DeleteScheduleRequest;
 import com.wookjae.scheduler.dto.GetScheduleResponse;
 import com.wookjae.scheduler.dto.UpdateScheduleRequest;
 import com.wookjae.scheduler.dto.UpdateScheduleResponse;
@@ -96,5 +97,16 @@ public class ScheduleService {
             schedule.getCreatedAt(),
             schedule.getModifiedAt()
         );
+    }
+
+    public void delete(Long scheduleId, DeleteScheduleRequest request) {
+        Schedule schedule = scheduleRepository.findById(scheduleId)
+            .orElseThrow(() -> new IllegalArgumentException("해당 일정이 존재하지 않습니다."));
+
+        if (!schedule.getPassword().equals(request.getPassword())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "비밀번호가 일치하지 않습니다.");
+        }
+
+        scheduleRepository.deleteById(scheduleId);
     }
 }

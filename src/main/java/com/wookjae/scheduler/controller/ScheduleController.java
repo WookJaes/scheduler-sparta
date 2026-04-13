@@ -2,6 +2,7 @@ package com.wookjae.scheduler.controller;
 
 import com.wookjae.scheduler.dto.CreateScheduleRequest;
 import com.wookjae.scheduler.dto.CreateScheduleResponse;
+import com.wookjae.scheduler.dto.DeleteScheduleRequest;
 import com.wookjae.scheduler.dto.GetScheduleResponse;
 import com.wookjae.scheduler.dto.UpdateScheduleRequest;
 import com.wookjae.scheduler.dto.UpdateScheduleResponse;
@@ -10,6 +11,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,11 +44,20 @@ public class ScheduleController {
     }
 
     @PatchMapping("/schedules/{scheduleId}")
-    public ResponseEntity<UpdateScheduleResponse> updateSchedules(
+    public ResponseEntity<UpdateScheduleResponse> updateSchedule(
         @PathVariable Long scheduleId,
         @RequestBody UpdateScheduleRequest request
     ) {
         return ResponseEntity.status(HttpStatus.OK).body(scheduleService.update(scheduleId, request));
+    }
+
+    @DeleteMapping("/schedules/{scheduleId}")
+    public ResponseEntity<Void> deleteSchedule(
+        @PathVariable Long scheduleId,
+        @RequestBody DeleteScheduleRequest request
+    ) {
+        scheduleService.delete(scheduleId, request);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 }
