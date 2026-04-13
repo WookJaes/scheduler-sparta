@@ -24,15 +24,7 @@ public class CommentService {
             () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "일정이 존재하지 않습니다.")
         );
 
-        if (request.getContent() == null || request.getContent().isBlank()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "댓글 내용은 필수입니다.");
-        }
-        if (request.getAuthor() == null || request.getAuthor().isBlank()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "작성자명은 필수입니다.");
-        }
-        if (request.getPassword() == null || request.getPassword().isBlank()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "비밀번호는 필수입니다.");
-        }
+        validateCommentRequest(request);
 
         long count = commentRepository.countByScheduleId(scheduleId);
         if (count >= 10) {
@@ -55,5 +47,20 @@ public class CommentService {
             savedComment.getCreatedAt(),
             savedComment.getModifiedAt()
         );
+    }
+
+    private void validateCommentRequest(CreateCommentRequest request) {
+        if (request.getContent() == null || request.getContent().isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "댓글 내용은 필수입니다.");
+        }
+        if (request.getContent().length() > 100) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "댓글 내용은 100자 이내여야 합니다.");
+        }
+        if (request.getAuthor() == null || request.getAuthor().isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "작성자명은 필수입니다.");
+        }
+        if (request.getPassword() == null || request.getPassword().isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "비밀번호는 필수입니다.");
+        }
     }
 }

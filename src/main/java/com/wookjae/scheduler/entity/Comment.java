@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "comments")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Comment extends BaseEntity{
+public class Comment extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +23,7 @@ public class Comment extends BaseEntity{
     @Column(nullable = false)
     private Long scheduleId;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     private String content;
 
     @Column(nullable = false, length = 50)
@@ -32,7 +32,7 @@ public class Comment extends BaseEntity{
     @Column(nullable = false, length = 20)
     private String password;
 
-    public Comment(Long scheduleId, String content, String author, String password){
+    public Comment(Long scheduleId, String content, String author, String password) {
         this.scheduleId = scheduleId;
         this.content = content;
         this.author = author;

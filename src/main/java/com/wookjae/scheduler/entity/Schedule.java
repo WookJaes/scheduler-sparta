@@ -20,10 +20,10 @@ public class Schedule extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long scheduleId;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 30)
     private String title;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 200)
     private String content;
 
     @Column(nullable = false, length = 50)
