@@ -24,6 +24,20 @@ public class ScheduleService {
 
     @Transactional
     public CreateScheduleResponse save(CreateScheduleRequest request) {
+
+        if (request.getTitle() == null || request.getTitle().isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "일정 제목은 필수입니다.");
+        }
+        if (request.getContent() == null || request.getContent().isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "일정 내용은 필수입니다.");
+        }
+        if (request.getAuthor() == null || request.getAuthor().isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "작성자명은 필수입니다.");
+        }
+        if (request.getPassword() == null || request.getPassword().isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "비밀번호는 필수입니다.");
+        }
+
         Schedule schedule = new Schedule(
             request.getTitle(),
             request.getContent(),
@@ -84,12 +98,21 @@ public class ScheduleService {
             () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "해당 일정이 없습니다.")
         );
 
+        if (request.getTitle() == null || request.getTitle().isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "일정 제목은 필수입니다.");
+        }
+        if (request.getAuthor() == null || request.getAuthor().isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "작성자명은 필수입니다.");
+        }
+        if (request.getPassword() == null || request.getPassword().isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "비밀번호는 필수입니다.");
+        }
+
         if (!schedule.getPassword().equals(request.getPassword())) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "비밀번호가 일치하지 않습니다.");
         }
 
         schedule.updateSchedule(request.getTitle(), request.getAuthor());
-
         return new UpdateScheduleResponse(
             schedule.getScheduleId(),
             schedule.getTitle(),
@@ -103,6 +126,10 @@ public class ScheduleService {
     public void delete(Long scheduleId, DeleteScheduleRequest request) {
         Schedule schedule = scheduleRepository.findById(scheduleId)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "해당 일정이 없습니다."));
+
+        if (request.getPassword() == null || request.getPassword().isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "비밀번호는 필수입니다.");
+        }
 
         if (!schedule.getPassword().equals(request.getPassword())) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "비밀번호가 일치하지 않습니다.");
