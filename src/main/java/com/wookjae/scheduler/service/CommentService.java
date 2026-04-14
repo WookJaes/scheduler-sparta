@@ -23,7 +23,6 @@ public class CommentService {
 
     /**
      * 특정 일정에 댓글을 생성한다.
-     * <p>
      * 일정 존재 여부를 확인하고, 댓글 입력값을 검증한 뒤 댓글 개수 제한을 확인하여 댓글을 저장한다.
      *
      * @param scheduleId 댓글이 작성될 일정의 ID

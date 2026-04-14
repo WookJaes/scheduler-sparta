@@ -69,7 +69,7 @@ public class ScheduleController {
      * 특정 일정을 수정하는 API
      *
      * @param scheduleId 수정할 일정의 ID
-     * @param request 일정 수정 요청 데이터
+     * @param request    일정 수정 요청 데이터
      * @return 수정된 일정 정보와 HTTP 상태 코드 200(OK)
      */
     @PatchMapping("/schedules/{scheduleId}")
@@ -84,7 +84,7 @@ public class ScheduleController {
      * 특정 일정을 삭제하는 API
      *
      * @param scheduleId 삭제할 일정의 ID
-     * @param request 삭제 요청 데이터 (비밀번호 등)
+     * @param request    삭제 요청 데이터 (비밀번호 등)
      * @return HTTP 상태 코드 204(NO_CONTENT)
      */
     @DeleteMapping("/schedules/{scheduleId}")

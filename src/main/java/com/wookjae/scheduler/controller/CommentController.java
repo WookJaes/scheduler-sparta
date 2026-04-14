@@ -24,11 +24,14 @@ public class CommentController {
      * 특정 일정에 댓글을 생성하는 API
      *
      * @param scheduleId 댓글이 작성될 일정의 ID
-     * @param request 댓글 생성 요청 데이터
+     * @param request    댓글 생성 요청 데이터
      * @return 생성된 댓글 정보 (201 CREATED)
      */
     @PostMapping("/schedules/{scheduleId}/comments")
-    public ResponseEntity<CreateCommentResponse> createComment(@PathVariable Long scheduleId, @RequestBody CreateCommentRequest request){
+    public ResponseEntity<CreateCommentResponse> createComment(
+        @PathVariable Long scheduleId,
+        @RequestBody CreateCommentRequest request
+    ) {
         return ResponseEntity.status(HttpStatus.CREATED).body(commentService.save(scheduleId, request));
     }
 }

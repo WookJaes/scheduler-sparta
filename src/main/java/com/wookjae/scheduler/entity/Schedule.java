@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * 일정(Schedule) 정보를 저장하는 엔티티
+ * <p>
  * 각 일정은 제목, 내용, 작성자, 비밀번호를 포함한다.
  * password는 일정 수정 및 삭제 시 사용된다.
  */

@@ -22,7 +22,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 /**
  * 일정 관련 비즈니스 로직을 처리하는 서비스 클래스
- * 일정 생성, 조회, 수정, 삭제 기능을 처리한다.
  */
 @Service
 @RequiredArgsConstructor
