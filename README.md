@@ -1,15 +1,16 @@
 # Scheduler App
 
-Spring Boot와 JPA를 기반으로 일정 생성, 조회, 수정, 삭제(CRUD) 기능과 댓글 작성 기능을 제공하는 일정 관리 애플리케이션입니다.
+Spring Boot와 JPA 기반의 일정 CRUD 및 댓글 작성 기능을 제공하는 애플리케이션입니다.
 
 ## 개발 환경
 
 ![IntelliJ IDEA](https://img.shields.io/badge/Intellij%20Idea-000?logo=intellijidea&style=for-the-badge)
+![Postman](https://img.shields.io/badge/Postman%2011.88.0-FF6C37?logo=postman&logoColor=white&style=for-the-badge)
+
 ![Java](https://img.shields.io/badge/Java%2017-ED8B00?logo=openjdk&style=for-the-badge)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot%204.0.5-6DB33F?logo=springboot&logoColor=white&style=for-the-badge)
 ![JPA](https://img.shields.io/badge/JPA%203.2.0-6DB33F?logo=hibernate&logoColor=white&style=for-the-badge)
 ![MySQL](https://img.shields.io/badge/MySQL%208.4.8-4479A1?logo=mysql&logoColor=white&style=for-the-badge)
-![Postman](https://img.shields.io/badge/Postman%2011.88.0-FF6C37?logo=postman&logoColor=white&style=for-the-badge)
 
 ## 주요 기능
 
@@ -40,7 +41,7 @@ Base URL: `http://localhost:8080`
 
 ## ERD
 
-<img src="./docs/ERD.png" width="60%" alt="ERD 다이어그램"/>
+<img src="./docs/ERD.png" width="70%" alt="ERD 다이어그램"/>
 
 ## 프로젝트 구조
 
