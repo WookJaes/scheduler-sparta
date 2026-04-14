@@ -20,6 +20,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+/**
+ * 일정 관련 비즈니스 로직을 처리하는 서비스 클래스
+ * 일정 생성, 조회, 수정, 삭제 기능을 처리한다.
+ */
 @Service
 @RequiredArgsConstructor
 public class ScheduleService {
@@ -27,6 +31,13 @@ public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
     private final CommentRepository commentRepository;
 
+    /**
+     * 새로운 일정을 생성한다.
+     * 입력값을 검증한 뒤 일정을 저장한다.
+     *
+     * @param request 일정 생성 요청 데이터
+     * @return 생성된 일정 정보
+     */
     @Transactional
     public CreateScheduleResponse save(CreateScheduleRequest request) {
         validateCreateRequest(request);
@@ -49,6 +60,13 @@ public class ScheduleService {
         );
     }
 
+    /**
+     * 전체 일정 목록을 조회한다.
+     * 작성자(author)가 주어지면 해당 작성자의 일정만 조회한다.
+     *
+     * @param author 작성자 필터 (선택 값)
+     * @return 일정 목록
+     */
     @Transactional(readOnly = true)
     public List<GetScheduleResponse> findAll(String author) {
         List<Schedule> schedules = (author == null || author.isBlank())
@@ -69,6 +87,13 @@ public class ScheduleService {
         return responses;
     }
 
+    /**
+     * 특정 일정의 상세 정보를 조회한다.
+     * 일정 정보와 해당 일정의 댓글 목록을 포함한다.
+     *
+     * @param scheduleId 조회할 일정의 ID
+     * @return 일정 상세 정보
+     */
     @Transactional(readOnly = true)
     public GetScheduleDetailResponse findOne(Long scheduleId) {
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(
@@ -98,6 +123,14 @@ public class ScheduleService {
         );
     }
 
+    /**
+     * 특정 일정을 수정한다.
+     * 입력값을 검증하고 비밀번호를 확인한 뒤 일정을 수정한다.
+     *
+     * @param scheduleId 수정할 일정의 ID
+     * @param request 일정 수정 요청 데이터
+     * @return 수정된 일정 정보
+     */
     @Transactional
     public UpdateScheduleResponse update(Long scheduleId, UpdateScheduleRequest request) {
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(
@@ -119,6 +152,13 @@ public class ScheduleService {
         );
     }
 
+    /**
+     * 특정 일정을 삭제한다.
+     * 비밀번호를 확인한 뒤 일정을 삭제한다.
+     *
+     * @param scheduleId 삭제할 일정의 ID
+     * @param request 삭제 요청 데이터 (비밀번호 포함)
+     */
     @Transactional
     public void delete(Long scheduleId, DeleteScheduleRequest request) {
         Schedule schedule = scheduleRepository.findById(scheduleId)
@@ -135,6 +175,11 @@ public class ScheduleService {
         scheduleRepository.deleteById(scheduleId);
     }
 
+    /**
+     * 일정 생성 데이터 유효성 검증
+     *
+     * @param request 일정 생성 요청 데이터
+     */
     private void validateCreateRequest(CreateScheduleRequest request) {
         if (request.getTitle() == null || request.getTitle().isBlank()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "일정 제목은 필수입니다.");
@@ -156,6 +201,11 @@ public class ScheduleService {
         }
     }
 
+    /**
+     * 일정 수정 데이터 유효성 검증
+     *
+     * @param request 일정 수정 요청 데이터
+     */
     private void validateUpdateRequest(UpdateScheduleRequest request) {
         if (request.getTitle() == null || request.getTitle().isBlank()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "일정 제목은 필수입니다.");

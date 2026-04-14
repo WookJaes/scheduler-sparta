@@ -10,6 +10,11 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+/**
+ * 댓글(Comment) 정보를 저장하는 엔티티
+ * 각 댓글은 특정 일정(schedule)에 속한다.
+ * password는 댓글 수정 및 삭제 시 사용된다.
+ */
 @Getter
 @Entity
 @Table(name = "comments")

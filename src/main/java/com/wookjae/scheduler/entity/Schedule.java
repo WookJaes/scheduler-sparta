@@ -10,6 +10,11 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+/**
+ * 일정(Schedule) 정보를 저장하는 엔티티
+ * 각 일정은 제목, 내용, 작성자, 비밀번호를 포함한다.
+ * password는 일정 수정 및 삭제 시 사용된다.
+ */
 @Getter
 @Entity
 @Table(name = "schedules")
@@ -39,6 +44,7 @@ public class Schedule extends BaseEntity {
         this.password = password;
     }
 
+    // 일정의 제목과 작성자를 수정한다.
     public void updateSchedule(String title, String author) {
         this.title = title;
         this.author = author;
